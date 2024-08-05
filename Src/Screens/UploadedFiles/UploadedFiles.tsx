@@ -69,41 +69,6 @@ const UploadedFiles: React.FC = () => {
         }
         return true;
     };
-    // PushNotification.configure({
-    //     onRegister: function (token) {
-    //         console.log('TOKEN:', token);
-    //     },
-    //     onNotification: function (notification) {
-    //         console.log('NOTIFICATION:', notification);
-    //         //   notification.finish(PushNotificationIOS.FetchResult.NoData);
-    //     },
-    //     permissions: {
-    //         alert: true,
-    //         badge: true,
-    //         sound: true,
-    //     },
-    //     popInitialNotification: true,
-    //     requestPermissions: Platform.OS === 'ios',
-    // });
-    // const pushNotif = () => {
-    //     PushNotification.createChannel(
-    //         {
-    //             channelId: "specialid", // (required)
-    //             channelName: "Special messasge", // (required)
-    //             channelDescription: "Notification for special message", // (optional) default: undefined.
-    //             importance: 4, // (optional) default: 4. Int value of the Android notification importance
-    //             vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
-    //         },
-    //         (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-    //     );
-    //     PushNotification.localNotification({
-    //         channelId: 'specialid', //his must be same with channelid in createchannel
-    //         title: 'hello',
-    //         message: 'test message'
-    //     })
-    // }
-
-
 
 
     const TestNotification = (title: string, message: string) => {
@@ -112,12 +77,13 @@ const UploadedFiles: React.FC = () => {
             channelId: "default-channel-id",
             title: title,
             message: message,
+            smallIcon: "ic_notification",
+            largeIcon: "ic_notification"
+
         });
     }
 
-    // useEffect(() => {
-    //     TestNotification()
-    // }, [uploadStatuses])
+
 
 
 
@@ -283,145 +249,279 @@ const UploadedFiles: React.FC = () => {
     };
 
     return (
-        <ScrollView style={{ backgroundColor: "#fff" }}>
+
+
+        <ScrollView style={styles.container}>
             <View>
-                <View style={{ flexDirection: "row", justifyContent: "space-around", marginVertical: 5, borderBottomWidth: 0.5, padding: 10 }}>
-                    <View style={{ width: "60%", alignItems: "flex-end", justifyContent: "center", }}>
-                        <Text style={{ color: "#000", fontWeight: "900", width: "100%", }}>Uploaded Files(Local)</Text>
+                <View style={styles.headerContainer}>
+                    <View style={styles.headerTextContainer}>
+                        <Text style={styles.headerText}>Uploaded Files(Local)</Text>
                     </View>
-                    {flattenedFiles.length > 0 ?
-                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
-                            <TouchableOpacity style={{ backgroundColor: "#34aeeb", width: "20%", right: 15 }} onPress={resetdata}>
+                    {flattenedFiles.length > 0 ? (
+                        <View style={styles.headerButtonContainer}>
+                            <TouchableOpacity style={styles.resetButton} onPress={resetdata}>
                                 <Icon name='close-outline' color={"#fff"} size={30} />
                             </TouchableOpacity>
-                            {/* <View style={{ width: "20%", backgroundColor: "red" }}>
-                                <Text style={{ right: 12 }}>Clear</Text>
-                            </View> */}
-                        </View> : null}
-
-
+                        </View>
+                    ) : null}
                 </View>
-                <View style={{ width: "100%", marginVertical: 10 }}>
-                    {flattenedFiles.length > 0 ?
+                <View style={styles.filesContainer}>
+                    {flattenedFiles.length > 0 ? (
                         <FlatList
                             data={flattenedFiles}
-                            keyExtractor={(item: { uri: any; }, index: { toString: () => any; }) => item.uri ?? index.toString()}
+                            keyExtractor={(item, index) => item.uri ?? index.toString()}
                             numColumns={2}
-                            style={{}}
-                            renderItem={({ item, index }: any) => (
-                                <View style={{
-                                    height: 350, width: "45%", marginHorizontal: 10, marginVertical: 10, borderColor: "#b1b4b5", borderWidth: 1, shadowColor: "#000", backgroundColor: "white",
-                                    shadowOffset: { width: 0, height: 2 },
-                                    shadowOpacity: 0.25,
-                                    shadowRadius: 3.84, elevation: 5,
-                                }}>
+                            renderItem={({ item, index }) => (
+                                <View style={styles.fileItemContainer}>
                                     <View>
-                                        <TouchableOpacity onPress={() => openFile(item)} style={{ alignItems: "flex-end" }}>
+                                        <TouchableOpacity onPress={() => openFile(item)} style={styles.expandButton}>
                                             <Icon name='expand-outline' color={"#34aeeb"} size={30} />
                                         </TouchableOpacity>
-                                        <View style={{ height: "40%", justifyContent: "center", alignItems: "center" }}>
-                                            {item?.type === "application/pdf" ?
-                                                <Image source={require("../../Asset/pdf1.png")}
-                                                    resizeMode="contain" style={{ width: 80, height: 50 }}
-                                                /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
-                                                    <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
-                                                        style={{ width: 80, height: 50 }}
-                                                    /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
-                                                        style={{ width: 80, height: 50 }}
-                                                    /> : <Image resizeMode="cover" source={require("../../Asset/unsupport.jpeg")}
-                                                        style={{ width: 30, height: 30 }} />}
+                                        <View style={styles.fileIconContainer}>
+                                            {item?.type === "application/pdf" ? (
+                                                <Image source={require("../../Asset/pdf1.png")} resizeMode="contain" style={styles.fileIcon} />
+                                            ) : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                                                <Image source={require("../../Asset/ppt1.png")} resizeMode="contain" style={styles.fileIcon} />
+                                            ) : item?.type === "application/msword" ? (
+                                                <Image source={require("../../Asset/word1.svg.png")} resizeMode="contain" style={styles.fileIcon} />
+                                            ) : (
+                                                <Image source={require("../../Asset/unsupport.jpeg")} resizeMode="cover" style={styles.unsupportedIcon} />
+                                            )}
                                         </View>
-                                        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                            <View style={{ flexDirection: "row", width: "70%" }}>
-                                                <View style={{ justifyContent: "center", width: "35%", alignItems: "center" }}>
-                                                    {item?.type === "application/pdf" ?
-                                                        <Image source={require("../../Asset/pdf1.png")}
-                                                            resizeMode="contain" style={{ width: 30, height: 30 }}
-                                                        /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
-                                                            <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
-                                                                style={{ width: 30, height: 30 }}
-                                                            /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
-                                                                style={{ width: 30, height: 30 }}
-                                                            /> : <Image resizeMode="contain" source={require("../../Asset/unsupport.jpeg")}
-                                                                style={{ width: 30, height: 30 }} />}
+                                        <View style={styles.fileInfoContainer}>
+                                            <View style={styles.fileDetailsContainer}>
+                                                <View style={styles.fileTypeIconContainer}>
+                                                    {item?.type === "application/pdf" ? (
+                                                        <Image source={require("../../Asset/pdf1.png")} resizeMode="contain" style={styles.fileTypeIcon} />
+                                                    ) : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ? (
+                                                        <Image source={require("../../Asset/ppt1.png")} resizeMode="contain" style={styles.fileTypeIcon} />
+                                                    ) : item?.type === "application/msword" ? (
+                                                        <Image source={require("../../Asset/word1.svg.png")} resizeMode="contain" style={styles.fileTypeIcon} />
+                                                    ) : (
+                                                        <Image source={require("../../Asset/unsupport.jpeg")} resizeMode="contain" style={styles.fileTypeIcon} />
+                                                    )}
                                                 </View>
                                                 <View>
-                                                    <Text numberOfLines={1} style={{ width: 80 }}>{item?.name}</Text>
+                                                    <Text numberOfLines={1} style={styles.fileName}>{item?.name}</Text>
                                                     <Text>{item?.size}</Text>
                                                 </View>
                                             </View>
-                                            <View style={{ justifyContent: "center", width: "30%" }}>
-                                                <TouchableOpacity onPress={() => Deletefiles(index)} style={{ padding: 5, left: 5 }} >
+                                            <View style={styles.deleteButtonContainer}>
+                                                <TouchableOpacity onPress={() => Deletefiles(index)} style={styles.deleteButton}>
                                                     <Icon name='trash-outline' color={"#34aeeb"} size={30} />
                                                 </TouchableOpacity>
-
                                             </View>
                                         </View>
-                                        <View style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}>
-                                            <View style={{ marginVertical: 3, width: "90%", justifyContent: "center", }}>
-                                                <Text style={{ color: "#000", fontWeight: "700", left: 5 }}>Status: {uploadStatuses[index] || 'Not Started'}</Text>
+                                        <View style={styles.fileStatusContainer}>
+                                            <View style={styles.statusContainer}>
+                                                <Text style={styles.statusText}>Status: {uploadStatuses[index] || 'Not Started'}</Text>
                                             </View>
-
-                                            <View style={{ flexDirection: "row", width: "90%", }}>
-                                                <View style={{ justifyContent: "center", }}>
-                                                    <Icon name='aperture-outline' color={"#34aeeb"} size={25} />
-                                                </View>
-                                                <View style={{ justifyContent: "center", alignItems: "center", }}>
-                                                    <Text style={{ color: "#000", fontWeight: "700", left: 2 }}>Progress: {uploadProgress[index] ? uploadProgress[index].toFixed(2) : 0}%</Text>
-                                                </View>
+                                            <View style={styles.progressContainer}>
+                                                <Icon name='aperture-outline' color={"#34aeeb"} size={25} />
+                                                <Text style={styles.progressText}>Progress: {uploadProgress[index] ? uploadProgress[index].toFixed(2) : 0}%</Text>
                                             </View>
-                                            <View style={{ flexDirection: "row", width: "90%", }}>
-                                                <View style={{ justifyContent: "center" }}>
-                                                    <Icon name='speedometer-outline' color={"#34aeeb"} size={25} />
-                                                </View>
-                                                <View style={{ justifyContent: "center" }}>
-                                                    <Text style={{ color: "red", fontWeight: "600", left: 2 }}>Speed: {uploadSpeed[index] ? uploadSpeed[index].toFixed(2) : 0} KB/s</Text>
-                                                </View>
+                                            <View style={styles.speedContainer}>
+                                                <Icon name='speedometer-outline' color={"#34aeeb"} size={25} />
+                                                <Text style={styles.speedText}>Speed: {uploadSpeed[index] ? uploadSpeed[index].toFixed(2) : 0} KB/s</Text>
                                             </View>
-                                            {/* {!uploadCompleted[index] && (
-                                            <TouchableOpacity onPress={() => cancelUpload(index)} style={{ backgroundColor: "red", padding: 5, marginTop: 10 }}>
-                                                <Text style={{ color: "#fff" }}>Cancel</Text>
-                                            </TouchableOpacity>
-                                        )} */}
-
                                         </View>
-
                                     </View>
-                                    <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
-                                        <View style={{ width: "50%", alignItems: "center", justifyContent: "center" }}>
-                                            <TouchableOpacity key={index} onPress={() => Upload(index, item)} style={{ width: "80%", padding: 5, marginBottom: 10 }}>
+                                    <View style={styles.uploadContainer}>
+                                        <View style={styles.uploadButtonContainer}>
+                                            <TouchableOpacity key={index} onPress={() => Upload(index, item)} style={styles.uploadButton}>
                                                 <Icon name="cloud-upload-outline" color={"green"} size={35} />
                                             </TouchableOpacity>
                                         </View>
-                                        <View style={{ width: "40%" }}>
+                                        <View style={styles.retryContainer}>
                                             {uploadStatuses[index] === 'failed' ? (
-                                                <TouchableOpacity onPress={() => retryUpload(index)} style={{ padding: 5, }}>
+                                                <TouchableOpacity onPress={() => retryUpload(index)} style={styles.retryButton}>
                                                     <Icon name='refresh-circle-outline' color={"orange"} size={35} />
                                                 </TouchableOpacity>
                                             ) : (
                                                 !uploadCompleted[index] && (
-                                                    <TouchableOpacity onPress={() => cancelUpload(index)} style={{ padding: 5, }}>
+                                                    <TouchableOpacity onPress={() => cancelUpload(index)} style={styles.cancelButton}>
                                                         <Icon name='close-circle-outline' color={"red"} size={35} />
                                                     </TouchableOpacity>
                                                 )
                                             )}
                                         </View>
-
                                     </View>
                                 </View>
                             )}
-                        /> :
-                        <View style={{ height: 500, alignItems: "center", justifyContent: "center" }}>
-                            <Text style={{ fontWeight: "bold", color: "#000" }}>There is no data in local storage</Text>
+                        />
+                    ) : (
+                        <View style={styles.emptyContainer}>
+                            <Text style={styles.emptyText}>There is no data in local storage</Text>
                         </View>
-                    }
+                    )}
                 </View>
             </View>
-
         </ScrollView>
     );
 };
 
 export default UploadedFiles;
 
-const styles = StyleSheet.create({});
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff"
+    },
+    headerContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        marginVertical: 5,
+        borderBottomWidth: 0.5,
+        padding: 10,
+    },
+    headerTextContainer: {
+        width: "60%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+    },
+    headerText: {
+        color: "#000",
+        fontWeight: "900",
+        width: "100%",
+    },
+    headerButtonContainer: {
+        width: "40%",
+        alignItems: "flex-end",
+        justifyContent: "center",
+    },
+    resetButton: {
+        backgroundColor: "#34aeeb",
+        width: "20%",
+        right: 15,
+    },
+    filesContainer: {
+        width: "100%",
+        marginVertical: 10,
+    },
+    fileItemContainer: {
+        height: 350,
+        width: "45%",
+        marginHorizontal: 10,
+        marginVertical: 10,
+        borderColor: "#b1b4b5",
+        borderWidth: 1,
+        shadowColor: "#000",
+        backgroundColor: "white",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    expandButton: {
+        alignItems: "flex-end",
+    },
+    fileIconContainer: {
+        height: "40%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    fileIcon: {
+        width: 80,
+        height: 50,
+    },
+    unsupportedIcon: {
+        width: 30,
+        height: 30,
+    },
+    fileInfoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+    },
+    fileDetailsContainer: {
+        flexDirection: "row",
+        width: "70%",
+    },
+    fileTypeIconContainer: {
+        justifyContent: "center",
+        width: "35%",
+        alignItems: "center",
+    },
+    fileTypeIcon: {
+        width: 30,
+        height: 30,
+    },
+    fileName: {
+        width: 80,
+    },
+    deleteButtonContainer: {
+        justifyContent: "center",
+        width: "30%",
+    },
+    deleteButton: {
+        padding: 5,
+        left: 5,
+    },
+    fileStatusContainer: {
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: 10,
+    },
+    statusContainer: {
+        marginVertical: 3,
+        width: "90%",
+        justifyContent: "center",
+    },
+    statusText: {
+        color: "#000",
+        fontWeight: "700",
+        left: 5,
+    },
+    progressContainer: {
+        flexDirection: "row",
+        width: "90%",
+    },
+    progressText: {
+        color: "#000",
+        fontWeight: "700",
+        left: 2,
+    },
+    speedContainer: {
+        flexDirection: "row",
+        width: "90%",
+    },
+    speedText: {
+        color: "red",
+        fontWeight: "600",
+        left: 2,
+    },
+    uploadContainer: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    uploadButtonContainer: {
+        width: "50%",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    uploadButton: {
+        width: "80%",
+        padding: 5,
+        marginBottom: 10,
+    },
+    retryContainer: {
+        width: "40%",
+    },
+    retryButton: {
+        padding: 5,
+    },
+    cancelButton: {
+        padding: 5,
+    },
+    emptyContainer: {
+        height: 500,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    emptyText: {
+        fontWeight: "bold",
+        color: "#000",
+    },
+});

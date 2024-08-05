@@ -47,6 +47,7 @@
         </intent-filter>
     </receiver>
     <service android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationRegistrationService"/>
+   <meta-data  android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@mipmap/ic_notification" />
     </application>
     
      <queries> <intent> <action android:name="android.intent.action.VIEW" /> <data android:mimeType="*/*" /> </intent> </queries>

@@ -15,7 +15,7 @@ const Landingpage: React.FC = () => {
     }, [])
     return (
         <View style={styles.container}>
-            <Image source={require("../../Asset/front.jpg")}
+            <Image source={require("../../Asset/ic_notification.png")}
                 style={{ width: 100, height: 100 }}
             />
             <Text style={{ fontWeight: "bold", color: "#000", fontSize: 25 }}>Documenter</Text>

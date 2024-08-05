@@ -27,35 +27,20 @@ import PushNotification from 'react-native-push-notification';
 
 
 function App(): JSX.Element {
-  // PushNotification.configure({
-  //   onRegister: function (token) {
-  //     console.log('TOKEN:', token);
-  //   },
-  //   onNotification: function (notification) {
-  //     console.log('NOTIFICATION:', notification);
-  //     //   notification.finish(PushNotificationIOS.FetchResult.NoData);
-  //   },
-  //   onRemoteFetch: function (err) {
-  //     console.log("error", err)
-  //   },
-  //   permissions: {
-  //     alert: true,
-  //     badge: true,
-  //     sound: true,
-  //   },
-  //   popInitialNotification: true,
-  //   requestPermissions: Platform.OS === 'ios',
-  // });
+
 
   useEffect(() => {
     PushNotification.configure({
       onRegister: function (token) {
         console.log("TOKEN:", token);
+
       },
       onNotification: function (notification) {
         console.log("NOTIFICATION:", notification);
         // notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
+
+
       onAction: function (notification) {
         console.log("ACTION:", notification.action);
         console.log("NOTIFICATION:", notification);
