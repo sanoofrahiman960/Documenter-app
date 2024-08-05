@@ -267,6 +267,13 @@ const UploadedFiles: React.FC = () => {
             });
         }
     };
+    const resetdata = () => {
+
+        dispatch(Action.resetdata())
+        Toast.show('Clear All data from Local', Toast.SHORT);
+    }
+
+
 
     const retryUpload = (fileIndex: number) => {
         // Retry the upload
@@ -278,131 +285,138 @@ const UploadedFiles: React.FC = () => {
     return (
         <ScrollView style={{ backgroundColor: "#fff" }}>
             <View>
-                <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-                    <View>
-                        <Text style={{ color: "#000", fontWeight: "900" }}>Uploaded Files</Text>
+                <View style={{ flexDirection: "row", justifyContent: "space-around", marginVertical: 5, borderBottomWidth: 0.5, padding: 10 }}>
+                    <View style={{ width: "60%", alignItems: "flex-end", justifyContent: "center", }}>
+                        <Text style={{ color: "#000", fontWeight: "900", width: "100%", }}>Uploaded Files(Local)</Text>
                     </View>
+                    {flattenedFiles.length > 0 ?
+                        <View style={{ width: "40%", alignItems: "flex-end", justifyContent: "center" }}>
+                            <TouchableOpacity style={{ backgroundColor: "#34aeeb", width: "20%", right: 15 }} onPress={resetdata}>
+                                <Icon name='close-outline' color={"#fff"} size={30} />
+                            </TouchableOpacity>
+                            {/* <View style={{ width: "20%", backgroundColor: "red" }}>
+                                <Text style={{ right: 12 }}>Clear</Text>
+                            </View> */}
+                        </View> : null}
+
+
                 </View>
                 <View style={{ width: "100%", marginVertical: 10 }}>
-                    <FlatList
-                        data={flattenedFiles}
-                        keyExtractor={(item: { uri: any; }, index: { toString: () => any; }) => item.uri ?? index.toString()}
-                        numColumns={2}
-                        style={{}}
-                        renderItem={({ item, index }: any) => (
-                            <View style={{
-                                height: 400, width: "45%", marginHorizontal: 10, marginVertical: 10, borderColor: "#b1b4b5", borderWidth: 1, shadowColor: "#000", backgroundColor: "white",
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.25,
-                                shadowRadius: 3.84, elevation: 5,
-                            }}>
-                                <View>
-                                    <TouchableOpacity onPress={() => openFile(item)} style={{ alignItems: "flex-end" }}>
-                                        <Icon name='expand-outline' color={"#34aeeb"} size={30} />
-                                    </TouchableOpacity>
-                                    <View style={{ height: "40%", justifyContent: "center", alignItems: "center" }}>
-                                        {item?.type === "application/pdf" ?
-                                            <Image source={require("../../Asset/pdf1.png")}
-                                                resizeMode="contain" style={{ width: 80, height: 50 }}
-                                            /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
-                                                <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
-                                                    style={{ width: 80, height: 50 }}
-                                                /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
-                                                    style={{ width: 80, height: 50 }}
-                                                /> : null}
-                                    </View>
-                                    <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                        <View style={{ flexDirection: "row", width: "70%" }}>
-                                            <View style={{ justifyContent: "center", width: "35%", alignItems: "center" }}>
-                                                {item?.type === "application/pdf" ?
-                                                    <Image source={require("../../Asset/pdf1.png")}
-                                                        resizeMode="contain" style={{ width: 30, height: 30 }}
-                                                    /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
-                                                        <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
-                                                            style={{ width: 30, height: 30 }}
-                                                        /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
-                                                            style={{ width: 30, height: 30 }}
-                                                        /> : null}
-                                            </View>
-                                            <View>
-                                                <Text numberOfLines={1} style={{ width: 80 }}>{item?.name}</Text>
-                                                <Text>{item?.size}</Text>
-                                            </View>
+                    {flattenedFiles.length > 0 ?
+                        <FlatList
+                            data={flattenedFiles}
+                            keyExtractor={(item: { uri: any; }, index: { toString: () => any; }) => item.uri ?? index.toString()}
+                            numColumns={2}
+                            style={{}}
+                            renderItem={({ item, index }: any) => (
+                                <View style={{
+                                    height: 350, width: "45%", marginHorizontal: 10, marginVertical: 10, borderColor: "#b1b4b5", borderWidth: 1, shadowColor: "#000", backgroundColor: "white",
+                                    shadowOffset: { width: 0, height: 2 },
+                                    shadowOpacity: 0.25,
+                                    shadowRadius: 3.84, elevation: 5,
+                                }}>
+                                    <View>
+                                        <TouchableOpacity onPress={() => openFile(item)} style={{ alignItems: "flex-end" }}>
+                                            <Icon name='expand-outline' color={"#34aeeb"} size={30} />
+                                        </TouchableOpacity>
+                                        <View style={{ height: "40%", justifyContent: "center", alignItems: "center" }}>
+                                            {item?.type === "application/pdf" ?
+                                                <Image source={require("../../Asset/pdf1.png")}
+                                                    resizeMode="contain" style={{ width: 80, height: 50 }}
+                                                /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
+                                                    <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
+                                                        style={{ width: 80, height: 50 }}
+                                                    /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
+                                                        style={{ width: 80, height: 50 }}
+                                                    /> : <Image resizeMode="cover" source={require("../../Asset/unsupport.jpeg")}
+                                                        style={{ width: 30, height: 30 }} />}
                                         </View>
-                                        <View style={{ justifyContent: "center", width: "30%" }}>
-                                            <TouchableOpacity onPress={() => Deletefiles(index)} style={{ padding: 5, left: 5 }} >
-                                                <Icon name='trash-outline' color={"#34aeeb"} size={30} />
-                                            </TouchableOpacity>
+                                        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                                            <View style={{ flexDirection: "row", width: "70%" }}>
+                                                <View style={{ justifyContent: "center", width: "35%", alignItems: "center" }}>
+                                                    {item?.type === "application/pdf" ?
+                                                        <Image source={require("../../Asset/pdf1.png")}
+                                                            resizeMode="contain" style={{ width: 30, height: 30 }}
+                                                        /> : item?.type === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ?
+                                                            <Image resizeMode="contain" source={require("../../Asset/ppt1.png")}
+                                                                style={{ width: 30, height: 30 }}
+                                                            /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
+                                                                style={{ width: 30, height: 30 }}
+                                                            /> : <Image resizeMode="contain" source={require("../../Asset/unsupport.jpeg")}
+                                                                style={{ width: 30, height: 30 }} />}
+                                                </View>
+                                                <View>
+                                                    <Text numberOfLines={1} style={{ width: 80 }}>{item?.name}</Text>
+                                                    <Text>{item?.size}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ justifyContent: "center", width: "30%" }}>
+                                                <TouchableOpacity onPress={() => Deletefiles(index)} style={{ padding: 5, left: 5 }} >
+                                                    <Icon name='trash-outline' color={"#34aeeb"} size={30} />
+                                                </TouchableOpacity>
 
+                                            </View>
                                         </View>
-                                    </View>
-                                    <View style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}>
-                                        <View style={{ marginVertical: 3, width: "90%", justifyContent: "center", }}>
-                                            <Text style={{ color: "#000", fontWeight: "700", left: 5 }}>Status: {uploadStatuses[index] || 'Not Started'}</Text>
-                                        </View>
+                                        <View style={{ flexDirection: "column", alignItems: "center", marginTop: 10 }}>
+                                            <View style={{ marginVertical: 3, width: "90%", justifyContent: "center", }}>
+                                                <Text style={{ color: "#000", fontWeight: "700", left: 5 }}>Status: {uploadStatuses[index] || 'Not Started'}</Text>
+                                            </View>
 
-                                        <View style={{ flexDirection: "row", width: "90%", }}>
-                                            <View style={{ justifyContent: "center", }}>
-                                                <Icon name='aperture-outline' color={"#34aeeb"} size={25} />
+                                            <View style={{ flexDirection: "row", width: "90%", }}>
+                                                <View style={{ justifyContent: "center", }}>
+                                                    <Icon name='aperture-outline' color={"#34aeeb"} size={25} />
+                                                </View>
+                                                <View style={{ justifyContent: "center", alignItems: "center", }}>
+                                                    <Text style={{ color: "#000", fontWeight: "700", left: 2 }}>Progress: {uploadProgress[index] ? uploadProgress[index].toFixed(2) : 0}%</Text>
+                                                </View>
                                             </View>
-                                            <View style={{ justifyContent: "center", alignItems: "center", }}>
-                                                <Text style={{ color: "#000", fontWeight: "700", left: 2 }}>Progress: {uploadProgress[index] ? uploadProgress[index].toFixed(2) : 0}%</Text>
+                                            <View style={{ flexDirection: "row", width: "90%", }}>
+                                                <View style={{ justifyContent: "center" }}>
+                                                    <Icon name='speedometer-outline' color={"#34aeeb"} size={25} />
+                                                </View>
+                                                <View style={{ justifyContent: "center" }}>
+                                                    <Text style={{ color: "red", fontWeight: "600", left: 2 }}>Speed: {uploadSpeed[index] ? uploadSpeed[index].toFixed(2) : 0} KB/s</Text>
+                                                </View>
                                             </View>
-                                        </View>
-                                        <View style={{ flexDirection: "row", width: "90%", }}>
-                                            <View style={{ justifyContent: "center" }}>
-                                                <Icon name='speedometer-outline' color={"#34aeeb"} size={25} />
-                                            </View>
-                                            <View style={{ justifyContent: "center" }}>
-                                                <Text style={{ color: "red", fontWeight: "600", left: 2 }}>Speed: {uploadSpeed[index] ? uploadSpeed[index].toFixed(2) : 0} KB/s</Text>
-                                            </View>
-                                        </View>
-                                        {/* {!uploadCompleted[index] && (
+                                            {/* {!uploadCompleted[index] && (
                                             <TouchableOpacity onPress={() => cancelUpload(index)} style={{ backgroundColor: "red", padding: 5, marginTop: 10 }}>
                                                 <Text style={{ color: "#fff" }}>Cancel</Text>
                                             </TouchableOpacity>
                                         )} */}
 
-                                    </View>
+                                        </View>
 
-                                </View>
-                                <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
-                                    <View style={{ width: "50%", alignItems: "center", justifyContent: "center" }}>
-                                        <TouchableOpacity key={index} onPress={() => Upload(index, item)} style={{ width: "80%", padding: 5, marginBottom: 10 }}>
-                                            <Icon name="cloud-upload-outline" color={"green"} size={35} />
-                                        </TouchableOpacity>
                                     </View>
-                                    <View style={{ width: "40%" }}>
-                                        {uploadStatuses[index] === 'failed' ? (
-                                            <TouchableOpacity onPress={() => retryUpload(index)} style={{ padding: 5, }}>
-                                                <Icon name='refresh-circle-outline' color={"orange"} size={35} />
+                                    <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-between" }}>
+                                        <View style={{ width: "50%", alignItems: "center", justifyContent: "center" }}>
+                                            <TouchableOpacity key={index} onPress={() => Upload(index, item)} style={{ width: "80%", padding: 5, marginBottom: 10 }}>
+                                                <Icon name="cloud-upload-outline" color={"green"} size={35} />
                                             </TouchableOpacity>
-                                        ) : (
-                                            !uploadCompleted[index] && (
-                                                <TouchableOpacity onPress={() => cancelUpload(index)} style={{ padding: 5, }}>
-                                                    <Icon name='close-circle-outline' color={"red"} size={35} />
+                                        </View>
+                                        <View style={{ width: "40%" }}>
+                                            {uploadStatuses[index] === 'failed' ? (
+                                                <TouchableOpacity onPress={() => retryUpload(index)} style={{ padding: 5, }}>
+                                                    <Icon name='refresh-circle-outline' color={"orange"} size={35} />
                                                 </TouchableOpacity>
-                                            )
-                                        )}
-                                    </View>
+                                            ) : (
+                                                !uploadCompleted[index] && (
+                                                    <TouchableOpacity onPress={() => cancelUpload(index)} style={{ padding: 5, }}>
+                                                        <Icon name='close-circle-outline' color={"red"} size={35} />
+                                                    </TouchableOpacity>
+                                                )
+                                            )}
+                                        </View>
 
+                                    </View>
                                 </View>
-                            </View>
-                        )}
-                    />
+                            )}
+                        /> :
+                        <View style={{ height: 500, alignItems: "center", justifyContent: "center" }}>
+                            <Text style={{ fontWeight: "bold", color: "#000" }}>There is no data in local storage</Text>
+                        </View>
+                    }
                 </View>
             </View>
-            {/* <View style={{ alignItems: "center", marginVertical: 10 }}>
-                {flattenedFiles.map((item: any, index: any) => (
-                    //@ts-ignore
-                    <TouchableOpacity key={index} onPress={() => Upload(index, item)} style={{ backgroundColor: "green", width: "30%", padding: 8, marginBottom: 10 }}>
-                        <Text>Upload File {index + 1} to Server</Text>
-                    </TouchableOpacity>
-                ))}
-            </View> */}
-            {/* <TouchableOpacity onPress={TestNotification}>
-                <Text>clickk</Text>
-            </TouchableOpacity> */}
 
         </ScrollView>
     );

@@ -1,15 +1,12 @@
-export const ATTENDEE = 'ATTENDEE';
-export const LOGIN_TOKEN = 'LOGIN_TOKEN';
-export const LOGIN_USER = 'LOGIN_USER';
-export const SET_MODAL = 'SET_MODAL';
-export const RESET_MODAL = 'RESET_MODAL';
+
 export const FILEDATA = 'FILEDATA';
 export const DELETEFILE = 'DELETEFILE';
+export const RESET = 'RESET';
 
-export const setAttendee = (attendee: any) => {
+export const resetdata = () => {
     return {
-        type: ATTENDEE,
-        payload: attendee,
+        type: RESET,
+
     };
 };
 export const setData = (data: any) => {
@@ -19,12 +16,7 @@ export const setData = (data: any) => {
         payload: data,
     };
 };
-export const loginToken = (data: any) => {
-    return {
-        type: LOGIN_TOKEN,
-        payload: data,
-    };
-};
+
 export const deletefile = (index: any) => {
     console.log("deletefile", index)
     return {
@@ -32,20 +24,4 @@ export const deletefile = (index: any) => {
         payload: index,
     };
 };
-export const loginUser = (data: any) => {
-    return {
-        type: LOGIN_USER,
-        payload: data,
-    };
-};
-export function setModal(data: any) {
-    return {
-        type: SET_MODAL,
-        data,
-    };
-}
-export function reSetModal() {
-    return {
-        type: RESET_MODAL,
-    };
-}
+

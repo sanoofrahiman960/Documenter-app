@@ -85,7 +85,7 @@ const FilePicker = () => {
                             renderItem={({ item, index }: any) => (
 
                                 <View style={{
-                                    height: 300, width: "45%", marginHorizontal: 10, marginVertical: 10, borderColor: "#6b6d6e", borderWidth: 1, shadowColor: "#000", backgroundColor: "white",
+                                    height: 250, width: "45%", marginHorizontal: 10, marginVertical: 10, borderColor: "#6b6d6e", borderWidth: 1, shadowColor: "#000", backgroundColor: "white",
                                     shadowOffset: { width: 0, height: 2 },
                                     shadowOpacity: 0.25,
                                     shadowRadius: 3.84, elevation: 5,
@@ -104,7 +104,8 @@ const FilePicker = () => {
                                                         resizeMode="contain" style={{ width: 80, height: 50 }}
                                                     /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
                                                         style={{ width: 80, height: 50 }}
-                                                    /> : null}
+                                                    /> : <Image resizeMode="contain" source={require("../../Asset/unsupport.jpeg")}
+                                                        style={{ width: 30, height: 30 }} />}
                                         </View>
                                         <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
                                             <View style={{ flexDirection: "row", width: "70%" }}>
@@ -117,7 +118,8 @@ const FilePicker = () => {
                                                                 style={{ width: 30, height: 30 }}
                                                             /> : item?.type === "application/msword" ? <Image resizeMode="contain" source={require("../../Asset/word1.svg.png")}
                                                                 style={{ width: 30, height: 30 }}
-                                                            /> : null}
+                                                            /> : <Image resizeMode="contain" source={require("../../Asset/unsupport.jpeg")}
+                                                                style={{ width: 30, height: 30 }} />}
                                                 </View>
                                                 <View >
                                                     <Text numberOfLines={1} style={{ width: 80 }}>{item?.name}</Text>
