@@ -5,10 +5,12 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+// import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage; 
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
+// import com.rumax.reactnative.pdfviewer.PDFViewPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected String getJSMainModuleName() {
           return "index";
         }
+
 
         @Override
         protected boolean isNewArchEnabled() {

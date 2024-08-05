@@ -2,3 +2,25 @@ rootProject.name = 'trial'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/@react-native/gradle-plugin')
+
+
+include ':react-native-fs'    // added by developer to download fee receipt and history using content-disposition method
+project(':react-native-fs').projectDir = new File(settingsDir, '../node_modules/react-native-fs/android')
+
+include ':react-native-files-viewer'
+project(':react-native-files-viewer').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-files-viewer/android')
+
+include ':react-native-push-notification'
+project(':react-native-push-notification').projectDir = file('../node_modules/react-native-push-notification/android')
+
+
+
+
+// include ':react-native-view-pdf'
+// project(':react-native-view-pdf').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-pdf/android')
+// if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true") {
+//     include(":ReactAndroid")
+//     project(":ReactAndroid").projectDir = file('../node_modules/react-native/ReactAndroid')
+//     include(":ReactAndroid:hermes-engine")
+//     project(":ReactAndroid:hermes-engine").projectDir = file('../node_modules/react-native/ReactAndroid/hermes-engine')
+// }
