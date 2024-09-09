@@ -17,7 +17,7 @@ const PlanPage = () => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showDatePicker1, setShowDatePicker1] = useState(false);
     const navigate = useNavigation()
-    // Handle Date Picker Changes
+
     const handleDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || dateOfBirth;
         setShowDatePicker(false);
@@ -33,7 +33,7 @@ const PlanPage = () => {
 
     const handleContinue = () => {
         if (validateAllInputs()) {
-            navigate.navigate('Invest') // Replace 'NextPage' with your actual page name
+            navigate.navigate('Invest')
         }
     };
 
@@ -65,15 +65,14 @@ const PlanPage = () => {
             return false;
         }
 
-        return true; // All inputs are valid
+        return true;
     };
 
-    // Date Formatter
     const formatDate = (date) => {
         return date.toLocaleDateString();
     };
 
-    // Validate Percentage Input
+
     const validatePercentage = (text, setFunction) => {
         const num = Number(text);
         if (!isNaN(num) && num >= 1 && num <= 10) {
@@ -85,7 +84,7 @@ const PlanPage = () => {
         }
     };
 
-    // Validate Income Input
+
     const validateIncome = (text, setFunction) => {
         const num = Number(text);
         if (!isNaN(num) && num >= 0) {
@@ -110,7 +109,7 @@ const PlanPage = () => {
 
             <Text style={styles.title}>Let's Discuss Your Retirement!</Text>
 
-            {/* Date of Birth Picker */}
+
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                 <View style={{ width: 150, alignItems: "center" }}>
                     <Text>Date of Birth</Text>
@@ -128,7 +127,7 @@ const PlanPage = () => {
                 </View>
             </View>
 
-            {/* Monthly Income Input */}
+
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -148,7 +147,7 @@ const PlanPage = () => {
                 />
             )}
 
-            {/* Annual Income Growth */}
+
             <View style={styles.percentageInputContainer}>
                 <View style={{ width: 150, alignItems: "center" }}>
                     <Text>Annual Income Growth</Text>
@@ -168,7 +167,7 @@ const PlanPage = () => {
                 </View>
             </View>
 
-            {/* Inflation Rate Input */}
+
             <View style={styles.percentageInputContainer}>
                 <View style={{ width: 150, alignItems: "center" }}>
                     <Text>Expected Inflation Rate</Text>
@@ -188,7 +187,7 @@ const PlanPage = () => {
                 </View>
             </View>
 
-            {/* Date of Retirement Picker */}
+
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginVertical: 10 }}>
                 <View style={{ width: 150, alignItems: "center" }}>
                     <Text>Date Of Retirement</Text>
@@ -215,7 +214,7 @@ const PlanPage = () => {
                 />
             )}
 
-            {/* Monthly Income Needed at Retirement */}
+
             <View style={[styles.inputContainer, {}]}>
                 <TextInput
                     style={styles.input}
@@ -226,7 +225,7 @@ const PlanPage = () => {
                 />
             </View>
 
-            {/* Retirement Plan Name Input */}
+
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}

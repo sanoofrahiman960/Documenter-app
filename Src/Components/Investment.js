@@ -152,7 +152,7 @@ export default function Investment() {
             );
             setdata(filteredData);
         } else {
-            setdata(initialData); // Reset to the original data
+            setdata(initialData);
         }
     };
 
@@ -183,7 +183,7 @@ export default function Investment() {
                     placeholder='Search'
                     value={search}
                     onChangeText={searchHandler}
-                // Update search query and filter data
+
                 />
             </View>
 
@@ -242,7 +242,7 @@ export default function Investment() {
 
                 }}>
                 <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }}
-                //onPress={() => setVisible(false)}
+
                 >
                     <Pressable style={{
                         height: '70%',
@@ -250,13 +250,12 @@ export default function Investment() {
                     }}
                         onPress={() => {
                             setVisible2(false)
-                            //setModalData([])
-                            //setmode([])
+
 
 
                         }} />
                     <View
-                        //contentContainerStyle={{flex:1}}
+
                         style={{
                             height: '30%',
 
@@ -308,7 +307,7 @@ export default function Investment() {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'column', // You can change to 'row' for side-by-side
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
@@ -329,7 +328,7 @@ const styles = StyleSheet.create({
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
         borderBottomColor: 'red',
-        marginTop: -10, // Adjust for better alignment
+        marginTop: -10,
     },
     container: {
         padding: 20,
